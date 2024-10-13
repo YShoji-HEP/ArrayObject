@@ -1,0 +1,24 @@
+[package]
+name = "array-object"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Self-describing binary format for arrays of integers, real numbers, complex numbers and strings, designed for object storage, database and single file"
+repository = "https://github.com/YShoji-HEP/ArrayObject"
+readme = "README.md"
+keywords = ["data_structures", "binary", "object_storage", "debugging"]
+categories = ["data-structures", "encoding", "development-tools::debugging"]
+
+[dependencies]
+num-complex = "0.4.6"
+ndarray_15 = { package = "ndarray", version = "0.15.6", optional = true }
+ndarray_16 = { package = "ndarray", version = "0.16.1", optional = true }
+nalgebra = { version = "0.33.0", optional = true }
+
+[features]
+default = []
+allow_float_down_convert = []
+ndarray = []
+ndarray_15 = ["ndarray", "dep:ndarray_15"]
+ndarray_16 = ["ndarray", "dep:ndarray_16"]
+nalgebra = ["dep:nalgebra"]
