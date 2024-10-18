@@ -1,5 +1,9 @@
 Array Object
 ============
+[![Sponsors](https://img.shields.io/badge/Offer-Coffee-red)](https://github.com/sponsors/YShoji-HEP)
+[![Crates.io](https://img.shields.io/crates/v/array-object?style=flat-square)](https://crates.io/crates/array-object)
+[![Crates.io](https://img.shields.io/crates/d/array-object?style=flat-square)](https://crates.io/crates/array-object)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue?style=flat-square)](https://github.com/YShoji-HEP/ArrayObject/blob/main/LICENSE.txt)
 
 Self-describing binary format for arrays of integers, real numbers, complex numbers and strings, designed for object storage, database and single file.
 
@@ -50,14 +54,12 @@ fn main() {
 
 Crate Features
 --------------
-* `allow_float_down_convert`
-Allow implicit conversion from `f64` to `f32`.
-* `ndarray_15`
-Enable ndarray support. The compatible version is 0.15.x.
-* `ndarray_16`
-Enable ndarray support. The compatible version is 0.16.x.
-* `nalgebra`
-Enable nalgebra support. Confirmed to work with version 0.33.0.
+|Feature|Description|
+|-|-|
+|`allow_float_down_convert`|Allow implicit conversion such as from `f64` to `f32`.|
+|`ndarray_15`|Enable ndarray support. The compatible version is 0.15.x.|
+|`ndarray_16`|Enable ndarray support. The compatible version is 0.16.x.|
+|`nalgebra`|Enable nalgebra support. Confirmed to work with version 0.33.0.|
 
 Format
 ------
