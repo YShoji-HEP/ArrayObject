@@ -47,6 +47,9 @@ macro_rules! into_complex {
                         return Err(ArrayObjectError::WrongDataType(val.datatype, val.shape.len()));
                     }
                     let len = val.len();
+                    if len == 0 {
+                        return Ok(VecShape(vec![], val.shape));
+                    }
                     match val.data.len() / (2 * len) {
                         4 => {
                             let data = val.data.chunks(8).map(|b| {
@@ -81,6 +84,9 @@ macro_rules! into_complex {
                         return Err(ArrayObjectError::WrongDataType(val.datatype, val.shape.len()));
                     }
                     let len = val.len();
+                    if len == 0 {
+                        return Ok(VecShape(vec![], val.shape));
+                    }
                     match val.data.len() / (2 * len) {
                         4 => {
                             let data = val.data.chunks(8).map(|b| {
@@ -115,6 +121,9 @@ macro_rules! into_complex {
                         return Err(ArrayObjectError::WrongDataType(val.datatype, val.shape.len()));
                     }
                     let len = val.len();
+                    if len == 0 {
+                        return Ok(VecVecShape(vec![], vec![], val.shape));
+                    }
                     let mut re = Vec::<$ty>::with_capacity(len * 2);
                     let mut im = Vec::<$ty>::with_capacity(len * 2);
                     match val.data.len() / (2 * len) {

@@ -1,12 +1,12 @@
 [package]
 name = "array-object"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "Apache-2.0"
 description = "Self-describing binary format for arrays of integers, real numbers, complex numbers and strings, designed for object storage, database and single file"
 repository = "https://github.com/YShoji-HEP/ArrayObject"
 readme = "README.md"
-keywords = ["data_structures", "binary", "object_storage", "debugging"]
+keywords = ["data_structures", "binary_data", "object_storage", "debugging"]
 categories = ["data-structures", "encoding", "development-tools::debugging"]
 
 [dependencies]

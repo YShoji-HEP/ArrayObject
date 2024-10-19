@@ -17,7 +17,14 @@ impl Pack for ArrayObject {
     fn pack(self) -> Vec<u8> {
         match self.datatype {
             DataType::UnsignedInteger => {
-                let size_orig = self.data.len() / self.shape.product() as usize;
+                let len = self.shape.product();
+                if len == 0 {
+                    let mut data = vec![];
+                    let datatype = UNSIGNED_INTEGER | FIXED_LENGTH | self.shape.len() as u8;
+                    write_footer(&mut data, datatype, self.shape);
+                    return data;
+                }
+                let size_orig = self.data.len() / len as usize;
                 match inspect_integer(&self.data, size_orig, &self.shape) {
                     IntegerPackingOption::FixedLength(size_new) => {
                         let mut data = into_fixed_integer(self.data, size_orig, size_new);
@@ -52,7 +59,14 @@ impl Pack for ArrayObject {
                 }
             }
             DataType::SignedInteger => {
-                let size_orig = self.data.len() / self.shape.product() as usize;
+                let len = self.shape.product();
+                if len == 0 {
+                    let mut data = vec![];
+                    let datatype = SIGNED_INTEGER | FIXED_LENGTH | self.shape.len() as u8;
+                    write_footer(&mut data, datatype, self.shape);
+                    return data;
+                }
+                let size_orig = self.data.len() / len as usize;
                 match inspect_integer(&self.data, size_orig, &self.shape) {
                     IntegerPackingOption::FixedLength(size_new) => {
                         let mut data = into_fixed_integer(self.data, size_orig, size_new);
@@ -87,7 +101,14 @@ impl Pack for ArrayObject {
                 }
             }
             DataType::Real => {
-                let size_orig = self.data.len() / self.shape.product() as usize;
+                let len = self.shape.product();
+                if len == 0 {
+                    let mut data = vec![];
+                    let datatype = REAL | FIXED_LENGTH | self.shape.len() as u8;
+                    write_footer(&mut data, datatype, self.shape);
+                    return data;
+                }
+                let size_orig = self.data.len() / len as usize;
                 match inspect_float(&self.data, size_orig) {
                     FloatPackingOption::FixedLength(size_new) => {
                         let mut data = into_fixed_float(self.data, size_orig, size_new);
@@ -110,7 +131,14 @@ impl Pack for ArrayObject {
                 }
             }
             DataType::Complex => {
-                let size_orig = self.data.len() / self.shape.product() as usize;
+                let len = self.shape.product();
+                if len == 0 {
+                    let mut data = vec![];
+                    let datatype = COMPLEX | FIXED_LENGTH | self.shape.len() as u8;
+                    write_footer(&mut data, datatype, self.shape);
+                    return data;
+                }
+                let size_orig = self.data.len() / len as usize;
                 match inspect_float(&self.data, size_orig) {
                     FloatPackingOption::FixedLength(size_new) => {
                         let mut data = into_fixed_float(self.data, size_orig, size_new);

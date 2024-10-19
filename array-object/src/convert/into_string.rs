@@ -24,6 +24,9 @@ impl TryFrom<ArrayObject> for VecShape<String> {
                 val.shape.len(),
             ));
         }
+        if val.len() == 0 {
+            return Ok(VecShape(vec![], val.shape));
+        }
         let mut data = vec![];
         while let Some(p) = val.data.iter().position(|&x| x == 255) {
             let mut s = val.data.split_off(p + 1);

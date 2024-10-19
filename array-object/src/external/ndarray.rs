@@ -6,7 +6,7 @@ use ndarray_16 as ndarray;
 use crate::adaptor::*;
 use crate::error::ArrayObjectError;
 use crate::ArrayObject;
-use ndarray::{Array, Dim, Dimension, IxDynImpl};
+use ndarray::{Array, Array0, Array1, Array2, Array3, Array4, Array5, Array6, ArrayD, Dimension};
 use num_complex::Complex;
 
 macro_rules! ndarray_impl {
@@ -20,16 +20,103 @@ macro_rules! ndarray_impl {
                     VecShape(v, shape).try_into()
                 }
             }
-            impl TryFrom<ArrayObject> for Array<$ty, Dim<IxDynImpl>> {
+            impl TryFrom<ArrayObject> for ArrayD<$ty> {
                 type Error = ArrayObjectError;
                 fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
                     let VecShape::<$ty>(data, shape) = val.try_into()?;
                     let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
+                    let temp = Array::from_shape_vec(shape.as_slice(), data).unwrap();
+                    Ok(temp)
+                }
+            }
+            impl TryFrom<ArrayObject> for Array0<$ty> {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    let VecShape::<$ty>(mut data, shape) = val.try_into()?;
+                    let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
                     if shape.is_empty() {
-                        Err(ArrayObjectError::External("The data is not an array."))
-                    } else {
-                        let temp = Array::from_shape_vec(shape.as_slice(), data).unwrap();
+                        let temp = Array0::from_elem([], data.pop().unwrap());
                         Ok(temp)
+                    } else {
+                        Err(ArrayObjectError::External("Array dimension mismatch."))
+                    }
+                }
+            }
+            impl TryFrom<ArrayObject> for Array1<$ty> {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    let VecShape::<$ty>(data, shape) = val.try_into()?;
+                    let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
+                    if shape.len() == 1 {
+                        let temp = Array1::from_shape_vec(shape[0], data).unwrap();
+                        Ok(temp)
+                    } else {
+                        Err(ArrayObjectError::External("Array dimension mismatch."))
+                    }
+                }
+            }
+            impl TryFrom<ArrayObject> for Array2<$ty> {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    let VecShape::<$ty>(data, shape) = val.try_into()?;
+                    let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
+                    if shape.len() == 2 {
+                        let temp = Array2::from_shape_vec((shape[0], shape[1]), data).unwrap();
+                        Ok(temp)
+                    } else {
+                        Err(ArrayObjectError::External("Array dimension mismatch."))
+                    }
+                }
+            }
+            impl TryFrom<ArrayObject> for Array3<$ty> {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    let VecShape::<$ty>(data, shape) = val.try_into()?;
+                    let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
+                    if shape.len() == 3 {
+                        let temp = Array3::from_shape_vec((shape[0], shape[1], shape[2]), data).unwrap();
+                        Ok(temp)
+                    } else {
+                        Err(ArrayObjectError::External("Array dimension mismatch."))
+                    }
+                }
+            }
+            impl TryFrom<ArrayObject> for Array4<$ty> {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    let VecShape::<$ty>(data, shape) = val.try_into()?;
+                    let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
+                    if shape.len() == 4 {
+                        let temp = Array4::from_shape_vec((shape[0], shape[1], shape[2], shape[3]), data).unwrap();
+                        Ok(temp)
+                    } else {
+                        Err(ArrayObjectError::External("Array dimension mismatch."))
+                    }
+                }
+            }
+            impl TryFrom<ArrayObject> for Array5<$ty> {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    let VecShape::<$ty>(data, shape) = val.try_into()?;
+                    let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
+                    if shape.len() == 5 {
+                        let temp = Array5::from_shape_vec((shape[0], shape[1], shape[2], shape[3], shape[4]), data).unwrap();
+                        Ok(temp)
+                    } else {
+                        Err(ArrayObjectError::External("Array dimension mismatch."))
+                    }
+                }
+            }
+            impl TryFrom<ArrayObject> for Array6<$ty> {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    let VecShape::<$ty>(data, shape) = val.try_into()?;
+                    let shape: Vec<usize> = shape.iter().map(|&x| x.try_into().unwrap()).collect();
+                    if shape.len() == 6 {
+                        let temp = Array6::from_shape_vec((shape[0], shape[1], shape[2], shape[3], shape[4], shape[5]), data).unwrap();
+                        Ok(temp)
+                    } else {
+                        Err(ArrayObjectError::External("Array dimension mismatch."))
                     }
                 }
             }

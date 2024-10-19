@@ -82,6 +82,9 @@ macro_rules! into_integer {
                         return Err(ArrayObjectError::WrongDataType(val.datatype, val.shape.len()));
                     }
                     let len = val.len();
+                    if len == 0 {
+                        return Ok(VecShape(vec![], val.shape));
+                    }
                     if val.datatype == DataType::UnsignedInteger {
                         match val.data.len() / len {
                             1 => {

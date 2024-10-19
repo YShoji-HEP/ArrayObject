@@ -120,15 +120,8 @@ fn read_footer(bytes: &mut Vec<u8>) -> (u8, u8, Option<Vec<u64>>, Option<Vec<u8>
         (ty, format, None, Some(vec![data]))
     } else {
         let dim = (last & DIMENSION_MASK) as usize;
-        let chunksize = dim * 10;
-        let chunk: Vec<_> = bytes
-            .iter()
-            .rev()
-            .skip(1)
-            .take(chunksize)
-            .copied()
-            .collect();
-        let (shape, len) = varint_decode(chunk, dim);
+        let iter = bytes.iter().rev().skip(1);
+        let (shape, len) = varint_decode(iter, dim);
         bytes.truncate(bytes.len() - 1 - len);
         (ty, format, Some(shape), None)
     }

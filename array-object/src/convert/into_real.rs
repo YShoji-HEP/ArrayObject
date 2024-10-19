@@ -35,6 +35,9 @@ macro_rules! into_float {
                         return Err(ArrayObjectError::WrongDataType(val.datatype, val.shape.len()));
                     }
                     let len = val.len();
+                    if len == 0 {
+                        return Ok(VecShape(vec![], val.shape));
+                    }
                     match val.data.len() / len {
                         4 => {
                             let data = val.data.chunks(4).map(|b| f32::from_le_bytes(b.try_into().unwrap()) as $ty).collect();

@@ -15,7 +15,7 @@ pub fn varint_encode(numbers: Vec<u64>) -> Vec<u8> {
     res
 }
 
-pub fn varint_decode(varint: Vec<u8>, max_len: usize) -> (Vec<u64>, usize) {
+pub fn varint_decode<'a>(varint: impl Iterator<Item=&'a u8>, max_len: usize) -> (Vec<u64>, usize) {
     let mut res = vec![];
     let mut temp = 0;
     let mut i = 0;
