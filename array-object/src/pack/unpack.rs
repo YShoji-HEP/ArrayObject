@@ -112,7 +112,7 @@ impl Unpack for ArrayObject {
 }
 
 fn read_footer(bytes: &mut Vec<u8>) -> (u8, u8, Option<Vec<u64>>, Option<Vec<u8>>) {
-    let last = bytes.last().unwrap();
+    let last = bytes.pop().unwrap();
     let ty = last & TYPE_MASK;
     let format = last & FORMAT_MASK;
     if ty == SHORT_UNSIGNED_INTEGER || ty == SHORT_SIGNED_INTEGER {
@@ -120,9 +120,9 @@ fn read_footer(bytes: &mut Vec<u8>) -> (u8, u8, Option<Vec<u64>>, Option<Vec<u8>
         (ty, format, None, Some(vec![data]))
     } else {
         let dim = (last & DIMENSION_MASK) as usize;
-        let iter = bytes.iter().rev().skip(1);
+        let iter = bytes.iter().rev();
         let (shape, len) = varint_decode(iter, dim);
-        bytes.truncate(bytes.len() - 1 - len);
+        bytes.truncate(bytes.len() - len);
         (ty, format, Some(shape), None)
     }
 }

@@ -1,6 +1,6 @@
 use crate::misc::Product;
 
-/// The type of the array.
+/// The type of the elements.
 #[derive(Debug, Clone, PartialEq)]
 pub enum DataType {
     UnsignedInteger,
@@ -10,7 +10,7 @@ pub enum DataType {
     String,
 }
 
-/// The main array storage.
+/// The main array storage with type abstraction.
 #[derive(Debug, Clone, PartialEq)]
 pub struct ArrayObject {
     pub(crate) data: Vec<u8>,

@@ -3,7 +3,24 @@
 //!
 //! Examples
 //! --------
-//! The simplest way to write and read a file is to use the macros.
+//! Encoding and decording:
+//! ```
+//! use array_object::*;
+//!
+//! fn main() {
+//!     // Convert data into binary
+//!     let original = vec![1u32, 2, 3, 4];
+//!     let obj: ArrayObject = original.clone().try_into().unwrap();
+//!     let packed = obj.pack(); // This converts the data into Vec<u8>.
+//!
+//!     // Restore data
+//!     let unpacked = ArrayObject::unpack(packed).unwrap();
+//!     let inflated: Vec<u32> = unpacked.try_into().unwrap();
+//!     assert_eq!(original, inflated);
+//! }
+//! ```
+//! 
+//! One can also use the macros to write and read a file:
 //! ```
 //! use array_object::*;
 //!
@@ -15,23 +32,6 @@
 //!     // Load from a file
 //!     let restored: Vec<f64> = import_obj!("testdata.bin"); // The type annotation is required.
 //!     assert_eq!(original, restored);
-//! }
-//! ```
-//!
-//! An example using `ArrayObject` explicitly is the following.
-//! ```
-//! use array_object::*;
-//!
-//! fn main() {
-//!     // Convert data into binary
-//!     let original = vec![1u32, 2, 3, 4];
-//!     let obj: ArrayObject = original.clone().into();
-//!     let packed = obj.pack(); // This converts the data into Vec<u8>.
-//!
-//!     // Restore data
-//!     let unpacked = ArrayObject::unpack(packed).unwrap();
-//!     let inflated: Vec<u32> = unpacked.try_into().unwrap();
-//!     assert_eq!(original, inflated);
 //! }
 //! ```
 

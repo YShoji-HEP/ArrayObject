@@ -27,7 +27,7 @@ use array_object::*;
 fn main() {
     // Convert data into binary
     let original = vec![1u32, 2, 3, 4];
-    let obj: ArrayObject = original.clone().into();
+    let obj: ArrayObject = original.clone().try_into().unwrap();
     let packed = obj.pack(); // This converts the data into Vec<u8>.
 
     // Restore data
