@@ -1,10 +1,10 @@
 Specification of the ArrayObject encording
 ==========================================
 A footer is added to the data in reversed bytes. It has the following structure.
-|Data type|Compression|Dimension/Data|Shape|
-|-----------|----|-----|----|
-|3 bit|1 bit or 0 bit| 4 bit or 5 bit|8 bit x required|
-
+||Data type|Compression|Dimension|Short Data|Shape|
+|----|----|----|----|----|----|
+|Short|3 bit|0 bit| 0 bit| 5 bit|0bit
+|Long|3 bit|1 bit| 4 bit|0 bit|8 bit x required|
 
 Data type
 ---------
@@ -28,10 +28,14 @@ The forth bit indicates the compression type for number / string. The short inte
 |0| FIXED_LENGTH|JOINED|
 |1| VARIABLE_LENGTH|DICTIONARY|
 
-Additional Data
+Dimension
 ---------------
-The last four or five bits are used to store the dimension of the array or the data (short integers).
+The last four bits are used to store the dimension of the array.
+
+Short Data
+----------
+For SHORT_UNSIGNED_INTEGER and SHORT_SIGNED_INTEGER, the last five bits are used to store the data.
 
 Shape
 -----
-For array data, the shape is stored with the variable integer in row major order.
+The shape of the array is stored with the variable integer in row major order. If it is empty, it indicates a scalar variable.

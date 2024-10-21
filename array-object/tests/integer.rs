@@ -100,4 +100,12 @@ fn array_variable_integer() {
     let unpacked = ArrayObject::unpack(binary).unwrap();
     let restored: Vec<i32> = unpacked.try_into().unwrap();
     assert_eq!(original, restored);
+
+    let original: Vec<_> = (0..128).map(|i| u128::MAX >> i).collect();
+    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let binary = obj.pack();
+    assert_eq!(binary.len(), 1241 + 3);
+    let unpacked = ArrayObject::unpack(binary).unwrap();
+    let restored: Vec<u128> = unpacked.try_into().unwrap();
+    assert_eq!(original, restored);
 }

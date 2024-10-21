@@ -1,4 +1,3 @@
-
 pub fn from_variable_integer(packed: Vec<u8>) -> Vec<u8> {
     let mut data = vec![];
     let mut pos_header = 0;
@@ -39,7 +38,7 @@ pub fn from_variable_integer(packed: Vec<u8>) -> Vec<u8> {
                         }
                         pos += 8;
                     } else {
-                        let len = (packed[pos + 7] * 0b000_0001) as usize;
+                        let len = (packed[pos + 7] & 0b0111_1111) as usize;
                         for i in 0..7 {
                             temp.push(packed[pos + i]);
                         }
@@ -61,8 +60,18 @@ pub fn from_variable_integer(packed: Vec<u8>) -> Vec<u8> {
         pos_header = pos;
     }
     if let Some(max_bytes) = data.iter().map(|x| x.len()).max() {
+        let size = match max_bytes {
+            1 => 1,
+            2 => 2,
+            4 => 4,
+            8 => 8,
+            9..=16 => 16,
+            _ => {
+                panic!();
+            }
+        };
         for x in &mut data {
-            for _ in 0..(max_bytes - x.len()) {
+            for _ in 0..(size - x.len()) {
                 x.push(0);
             }
         }

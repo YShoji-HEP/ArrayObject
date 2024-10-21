@@ -112,7 +112,7 @@ pub fn into_variable_integer(data_orig: Vec<u8>, size_orig: usize, total_len: u6
                     if x[7] & 0b1000_0000u8 == 0 {
                         temp.push(x[7]);
                     } else {
-                        temp.push(1u8 | 0b1000_0000u8);
+                        temp.push(8u8 | 0b1000_0000u8);
                         temp.push(x[7]);
                     }
                     size.push(3);

@@ -16,7 +16,7 @@ Highlights
 * Generic integer and float types absorb the difference of type sizes.
 * Automatic compression using variable length integer/float and dictionary-coder for string.
 * The data is stored in the minimal data size.
-* Conversion from/into `ndarray` and `nalgebra` is supported.
+* Conversions from/into `ndarray` and `nalgebra` are supported.
 
 Examples
 --------
@@ -66,7 +66,7 @@ Format
 The data format is automatically selected to minimize the datasize.
 ### Integer
 Integer is either unsigned or signed, which is determined when [`ArrayObject`] is constructed. The zigzag encoding is used for signed integers. When restored to a variable, data is automatically converted into the desired integer type if the ranges overlap.
-#### Non-array
+#### Scalar
 * **Short Integer** (5bit)<br />
 The data is stored in the same byte as the footer. Thus the total data size is only one byte.
 
@@ -82,7 +82,7 @@ The integer is shortened to the smallest possible size. Each four integers, one 
 
 ### Float (Real, Complex)<br />
 Currently 32bit and 64bit floating numbers are supported.
-#### Non-array
+#### Scalar
 * **Fixed Length** (~~16bit~~, 32bit, 64bit, ~~128bit~~)<br />
 Use the smallest possible size without loss of precision.
 #### Array
@@ -93,7 +93,7 @@ The floating number is shortened to the smallest size. Fach four integers, one b
 
 ### String
 Only UTF-8 string is allowed, in particular, the non-UTF value of 0xFF is used internally and should be avoided.
-#### Non-array
+#### Scalar
 * **Single**<br />
 Just a single Vec[u8] data
 #### Array
@@ -130,6 +130,7 @@ Practically, in loosely typed languages, the results of functions like sqrt or l
 In addition, it is somewhat cumbersome to convert an array of complex numbers into an array of real numbers. `ArrayObject` provides a handy export/import option for complex numbers.
 
 #### Why is there no conversion from `Vec<Vec<_>>`?
-`Vec<Vec<_>>` may contain vectors of different lengths.
+`Vec<Vec<_>>` may contain vectors of different lengths and does not fit into `ArrayObject`.
 In general, if you work with an fixed length array, it is much efficient to use a crate like ndarray or nalgebra.
-For `ArrayObject`s having the same size, shape and type, `.try_concat()` method is available for `Vec<ArrayObject>`, which generates a one-dimensional higher array.
+If necessary, for `ArrayObject`s having the same size, shape and type, `.try_concat()` method is available for `Vec<ArrayObject>`, which generates a one-dimensional higher array.
+On the other hand, if the lengths are different, multiple `ArrayObject`s can be used and stored separately.
