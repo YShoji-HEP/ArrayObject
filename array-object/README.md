@@ -67,39 +67,39 @@ The data format is automatically selected to minimize the datasize.
 ### Integer
 Integer is either unsigned or signed, which is determined when [`ArrayObject`] is constructed. The zigzag encoding is used for signed integers. When restored to a variable, data is automatically converted into the desired integer type if the ranges overlap.
 #### Non-array
-* **Short Integer** (5bit)
+* **Short Integer** (5bit)<br />
 The data is stored in the same byte as the footer. Thus the total data size is only one byte.
 
-* **Variable Length** (8 x n bit)
+* **Variable Length** (8 x n bit)<br />
 The integer is shortened to 8bit x (smallest number).
 
 #### Array
-* **Fixed Length** (8bit, 16bit, 32bit, 64bit, 128bit)
+* **Fixed Length** (8bit, 16bit, 32bit, 64bit, 128bit)<br />
 Use the smallest possible size.
 All the elements have the same size.
-* **Variable Length** (8bit, 16bit, 32bit, 63bit, 64-128bit variable)
+* **Variable Length** (8bit, 16bit, 32bit, 63bit, 64-128bit variable)<br />
 The integer is shortened to the smallest possible size. Each four integers, one byte is added to indicate the size of each integer type. If the integer is longer than 63 bit, one byte is added to indicate how many bytes should be read additionally.
 
-### Float (Real, Complex)
+### Float (Real, Complex)<br />
 Currently 32bit and 64bit floating numbers are supported.
 #### Non-array
-* **Fixed Length** (~~16bit~~, 32bit, 64bit, ~~128bit~~)
+* **Fixed Length** (~~16bit~~, 32bit, 64bit, ~~128bit~~)<br />
 Use the smallest possible size without loss of precision.
 #### Array
-* **Fixed Length** (~~16bit~~, 32bit, 64bit, ~~128bit~~)
+* **Fixed Length** (~~16bit~~, 32bit, 64bit, ~~128bit~~)<br />
 Use the smallest possible size without loss of precision. All the numbers have the same size.
-* **Variable Length** (~~16bit~~, 32bit, 64bit, ~~128bit~~)
+* **Variable Length** (~~16bit~~, 32bit, 64bit, ~~128bit~~)<br />
 The floating number is shortened to the smallest size. Fach four integers, one byte is added to indicate the size of each integer type.
 
 ### String
 Only UTF-8 string is allowed, in particular, the non-UTF value of 0xFF is used internally and should be avoided.
 #### Non-array
-* **Single**
+* **Single**<br />
 Just a single Vec[u8] data
 #### Array
-* **Joined**
+* **Joined**<br />
 The strings are joined with marker 0xFF, which never appears in UTF-8.
-* **Dictionary**
+* **Dictionary**<br />
 Create a dictionary of maximum 256 variants and the array is converted into an array of the references to the dictionary.
 
 Q&A
@@ -132,5 +132,4 @@ In addition, it is somewhat cumbersome to convert an array of complex numbers in
 #### Why is there no conversion from `Vec<Vec<_>>`?
 `Vec<Vec<_>>` may contain vectors of different lengths.
 In general, if you work with an fixed length array, it is much efficient to use a crate like ndarray or nalgebra.
-There is an option to concatenate multiple `ArrayObject`s:
-* [`TryConcat`] trait concats `ArrayObject`s of the same size, shape and type and converts them into a higher dimensional `ArrayObject`. This is particularly useful when the same type of data have to be accumulated to give one meaningful set of data. An example is to accumulate (x,f(x)) for each x and generate an array containing x and f(x).
+For `ArrayObject`s having the same size, shape and type, `.try_concat()` method is available for `Vec<ArrayObject>`, which generates a one-dimensional higher array.

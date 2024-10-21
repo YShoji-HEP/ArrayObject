@@ -138,7 +138,7 @@ impl Pack for ArrayObject {
                     write_footer(&mut data, datatype, self.shape);
                     return data;
                 }
-                let size_orig = self.data.len() / len as usize;
+                let size_orig = self.data.len() / len as usize / 2;
                 match inspect_float(&self.data, size_orig) {
                     FloatPackingOption::FixedLength(size_new) => {
                         let mut data = into_fixed_float(self.data, size_orig, size_new);

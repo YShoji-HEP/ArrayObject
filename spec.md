@@ -9,20 +9,24 @@ A footer is added to the data in reversed bytes. It has the following structure.
 Data type
 ---------
 The first three bits of the last byte indicate the data type.
-0: SHORT_UNSIGNED_INTEGER
-1: SHORT_SIGNED_INTEGER
-2: UNSIGNED_INTEGER
-3: SIGNED_INTEGER
-4: REAL
-5: COMPLEX
-6: STRING
-7: (Not assigned)
+|Number|Data type|
+|-|-|
+|0| SHORT_UNSIGNED_INTEGER|
+|1| SHORT_SIGNED_INTEGER|
+|2| UNSIGNED_INTEGER|
+|3| SIGNED_INTEGER|
+|4| REAL|
+|5| COMPLEX|
+|6| STRING|
+|7| (Not assigned)|
 
 Compression
 -----------
 The forth bit indicates the compression type for number / string. The short integers do not have this bit. 
-0: FIXED_LENGTH / JOINED
-1: VARIABLE_LENGTH / DICTIONARY
+|Number|Compression (number)|Compression (string)|
+|-|-|-|
+|0| FIXED_LENGTH|JOINED|
+|1| VARIABLE_LENGTH|DICTIONARY|
 
 Additional Data
 ---------------

@@ -59,7 +59,7 @@ impl TryConcat for Vec<ArrayObject> {
 /// ```
 /// use array_object::*;
 /// let data = vec![1f64, 2.2, -1.1, 5.6];
-/// export_obj!("testdata.bin", original.clone());
+/// export_obj!("testdata.bin", data.clone());
 /// ```
 #[macro_export]
 macro_rules! export_obj {
