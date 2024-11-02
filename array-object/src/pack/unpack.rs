@@ -1,3 +1,4 @@
+use crate::bitfield::*;
 use crate::error::ArrayObjectError;
 use crate::misc::Product;
 use crate::pack::unpack_float::*;

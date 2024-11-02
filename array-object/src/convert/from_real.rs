@@ -30,6 +30,16 @@ macro_rules! from_float {
                     }
                 }
             }
+            impl<const N: usize> From<[$ty; N]> for ArrayObject {
+                fn from(val: [$ty; N]) -> Self {
+                    val.to_vec().into()
+                }
+            }
+            impl From<&[$ty]> for ArrayObject {
+                fn from(val: &[$ty]) -> Self {
+                    val.to_vec().into()
+                }
+            }
             impl TryFrom<VecShape<$ty>> for ArrayObject {
                 type Error = ArrayObjectError;
                 fn try_from(VecShape(val, shape): VecShape<$ty>) -> Result<Self, Self::Error> {

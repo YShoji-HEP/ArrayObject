@@ -160,6 +160,16 @@ macro_rules! into_complex {
                     Ok(data)
                 }
             }
+            impl<const N: usize> TryFrom<ArrayObject> for [Complex<$ty>; N] {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    if val.len() != N {
+                        return Err(ArrayObjectError::WrongDataType(val.datatype, val.shape.len()));
+                    }
+                    let data: Vec<Complex<$ty>> = val.try_into()?;
+                    Ok(data.try_into().unwrap())
+                }
+            }
         )*
     };
 }

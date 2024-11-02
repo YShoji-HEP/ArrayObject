@@ -50,25 +50,3 @@ impl ArrayObject {
         self.shape.len()
     }
 }
-
-pub const TYPE_MASK: u8 = 0b_111_0_0000;
-
-pub const SHORT_UNSIGNED_INTEGER: u8 = 0b_000_0_0000;
-pub const SHORT_SIGNED_INTEGER: u8 = 0b_001_0_0000;
-pub const UNSIGNED_INTEGER: u8 = 0b_010_0_0000;
-pub const SIGNED_INTEGER: u8 = 0b_011_0_0000;
-pub const REAL: u8 = 0b_100_0_0000;
-pub const COMPLEX: u8 = 0b_101_0_0000;
-pub const STRING: u8 = 0b_110_0_0000;
-
-pub const SHORTDATA_MASK: u8 = 0b_000_1_1111;
-
-pub const DIMENSION_MASK: u8 = 0b_000_0_1111;
-
-pub const FORMAT_MASK: u8 = 0b_000_1_0000;
-
-pub const FIXED_LENGTH: u8 = 0b_000_0_0000;
-pub const VARIABLE_LENGTH: u8 = 0b_000_1_0000;
-
-pub const JOINED: u8 = 0b_000_0_0000;
-pub const DICTIONARY: u8 = 0b_000_1_0000;

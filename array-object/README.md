@@ -126,11 +126,11 @@ A more technical difference is that `ArrayObject` adds a footer instead of a hea
 
 #### Why Complex Numbers?
 The relation between complex numbers and real numbers is the same as that of real numbers and integers. A subset of complex numbers is real numbers and there is a well-defined map betwen them where they overlap. This makes a difference between a complex number and a vague array of length 2.
-Practically, in loosely typed languages, the results of functions like sqrt or log yield either real numbers or complex numbers depending on the sign of the argument. It is thus useful to manifestly indicate complex numbers as a type and keep the same array shape.
+Practically, in dynamically typed languages, the results of functions like sqrt or log yield either real numbers or complex numbers depending on the sign of the argument. It is thus useful to manifestly indicate complex numbers as a type and keep the same array shape.
 In addition, it is somewhat cumbersome to convert an array of complex numbers into an array of real numbers. `ArrayObject` provides a handy export/import option for complex numbers.
 
 #### Why is there no conversion from `Vec<Vec<_>>`?
 `Vec<Vec<_>>` may contain vectors of different lengths and does not fit into `ArrayObject`.
 In general, if you work with an fixed length array, it is much efficient to use a crate like ndarray or nalgebra.
 If necessary, for `ArrayObject`s having the same size, shape and type, `.try_concat()` method is available for `Vec<ArrayObject>`, which generates a one-dimensional higher array.
-On the other hand, if the lengths are different, multiple `ArrayObject`s can be used and stored separately.
+On the other hand, if the lengths are different, it can be stored as multiple `ArrayObject`s in an object storage. See [`dbgbb`](https://github.com/YShoji-HEP/dbgbb) for such an implementation.

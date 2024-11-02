@@ -188,6 +188,16 @@ macro_rules! into_integer {
                     Ok(data)
                 }
             }
+            impl<const N: usize> TryFrom<ArrayObject> for [$ty; N] {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {
+                    if val.len() != N {
+                        return Err(ArrayObjectError::WrongDataType(val.datatype, val.shape.len()));
+                    }
+                    let data: Vec<$ty> = val.try_into()?;
+                    Ok(data.try_into().unwrap())
+                }
+            }
         )*
     }
 }

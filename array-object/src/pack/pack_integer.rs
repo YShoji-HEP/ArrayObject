@@ -1,5 +1,5 @@
 use crate::misc::Product;
-use crate::storage::TYPE_MASK;
+use crate::bitfield::TYPE_MASK;
 
 #[derive(Debug)]
 pub enum IntegerPackingOption {

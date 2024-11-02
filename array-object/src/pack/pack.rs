@@ -1,3 +1,4 @@
+use crate::bitfield::*;
 use crate::misc::Product;
 use crate::pack::pack_float::*;
 use crate::pack::pack_integer::*;

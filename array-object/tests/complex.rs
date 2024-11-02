@@ -81,3 +81,36 @@ fn array_variable_complex() {
     let restored: Vec<Complex64> = unpacked.try_into().unwrap();
     assert_eq!(original, restored);
 }
+
+#[test]
+fn zero_length() {
+    let original: Vec<Complex64> = vec![];
+    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let binary = obj.pack();
+    assert_eq!(binary.len(), 2);
+    let unpacked = ArrayObject::unpack(binary).unwrap();
+    let restored: Vec<Complex64> = unpacked.try_into().unwrap();
+    assert_eq!(original, restored);
+
+    let original: Vec<Complex64> = vec![];
+    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let objs = vec![obj.clone(), obj.clone(), obj.clone()]
+        .try_concat()
+        .unwrap();
+    let binary = objs.pack();
+    assert_eq!(binary.len(), 3);
+    let unpacked = ArrayObject::unpack(binary).unwrap();
+    let adaptor::VecShape::<Complex64>(restored, shape) = unpacked.try_into().unwrap();
+    assert_eq!(original, restored);
+    assert_eq!(shape, vec![3, 0])
+}
+
+#[test]
+fn array() {
+    let original = [Complex64::new(1., 2.); 128];
+    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let binary = obj.pack();
+    let unpacked = ArrayObject::unpack(binary).unwrap();
+    let restored: [Complex64; 128] = unpacked.try_into().unwrap();
+    assert_eq!(original, restored);
+}

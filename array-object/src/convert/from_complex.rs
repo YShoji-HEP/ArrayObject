@@ -22,6 +22,16 @@ macro_rules! from_complex {
                     Pair(val.re, val.im).into()
                 }
             }
+            impl<const N: usize> From<[Complex<$ty>; N]> for ArrayObject {
+                fn from(val: [Complex<$ty>; N]) -> Self {
+                    val.to_vec().into()
+                }
+            }
+            impl From<&[Complex<$ty>]> for ArrayObject {
+                fn from(val: &[Complex<$ty>]) -> Self {
+                    val.to_vec().into()
+                }
+            }
             impl From<Vec<Pair<$ty>>> for ArrayObject {
                 fn from(val: Vec<Pair<$ty>>) -> Self {
                     let shape = vec![val.len() as u64];

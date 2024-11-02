@@ -19,7 +19,7 @@
 //!     assert_eq!(original, inflated);
 //! }
 //! ```
-//! 
+//!
 //! One can also use the macros to write and read a file:
 //! ```
 //! use array_object::*;
@@ -37,6 +37,7 @@
 
 /// Adaptors for Complex and Array. These can be used to restore the data or construct ArrayObject without num::complex, ndarray or nalgebra.
 pub mod adaptor;
+mod bitfield;
 mod convert;
 mod error;
 mod external;

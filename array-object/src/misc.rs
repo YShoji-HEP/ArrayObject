@@ -55,7 +55,7 @@ impl TryConcat for Vec<ArrayObject> {
 }
 
 /// A macro to save the data into a file.
-/// 
+///
 /// ```
 /// use array_object::*;
 /// let data = vec![1f64, 2.2, -1.1, 5.6];
@@ -72,7 +72,7 @@ macro_rules! export_obj {
 }
 
 /// A macro to load the data from a file.
-/// 
+///
 /// ```
 /// use array_object::*;
 /// let restored: Vec<f64> = import_obj!("testdata.bin");

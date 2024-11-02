@@ -20,13 +20,13 @@ mod test_ndarray {
 }
 
 #[cfg(feature = "nalgebra")]
-mod test_ndarray {
+mod test_nalgebra {
     use array_object::*;
     use nalgebra::DMatrix;
     #[test]
-    fn ndarray_integer() {
+    fn nalgebra_integer() {
         let v: Vec<_> = (-128..128).map(|i| i as i32).collect();
-        let original = DMatrix::from_vec(16,16,v);
+        let original = DMatrix::from_vec(16, 16, v);
         let obj: ArrayObject = original.clone().try_into().unwrap();
         let binary = obj.pack();
         assert_eq!(binary.len(), 256 + 3);

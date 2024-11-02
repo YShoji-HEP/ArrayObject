@@ -5,6 +5,7 @@ use ndarray_16 as ndarray;
 
 use crate::adaptor::*;
 use crate::error::ArrayObjectError;
+use crate::misc::TryConcat;
 use crate::ArrayObject;
 use ndarray::{Array, Array0, Array1, Array2, Array3, Array4, Array5, Array6, ArrayD, Dimension};
 use num_complex::Complex;
@@ -141,3 +142,9 @@ ndarray_impl!(
     Complex<f32>,
     Complex<f64>
 );
+
+impl TryConcat for Array1<ArrayObject> {
+    fn try_concat(self) -> Result<ArrayObject, ArrayObjectError> {
+        self.to_vec().try_concat()
+    }
+}
