@@ -16,9 +16,8 @@ Highlights
 * The data is self-describing and can inflate itself into typed variables.
 * No nested structures, no tuple, no dataset name, always a simple array of uniform data.
 * Generic integer and float types absorb the difference of type sizes.
-* Automatic compression using variable length integer/float and dictionary-coder for string.
-* The data is stored in the minimal data size.
-* Conversions from/into `ndarray` and `nalgebra` are supported.
+* Automatic compression using variable length integer/float and dictionary-coder for string. The data is stored in the minimal data size.
+* Conversions from/into `Vec<_>`, `[T; N]`, `ndarray` and `nalgebra` are supported.
 
 Examples
 --------
@@ -46,7 +45,7 @@ use array_object::*;
 fn main() {
     // Save into a file
     let original = vec![1f64, 2.2, -1.1, 5.6];
-    export_obj!("testdata.bin", original.clone()); // The type has to be known at this point.
+    export_obj!("testdata.bin", original.clone()); // The type has to be known at this point. If the file exists, this will overwrite the existing file.
 
     // Load from a file
     let restored: Vec<f64> = import_obj!("testdata.bin"); // The type annotation is required.
@@ -97,7 +96,7 @@ The floating number is shortened to the smallest size. Fach four integers, one b
 Only UTF-8 string is allowed, in particular, the non-UTF value of 0xFF is used internally and should be avoided.
 #### Scalar
 * **Single**<br />
-Just a single Vec[u8] data
+Vec[u8] binary data
 #### Array
 * **Joined**<br />
 The strings are joined with marker 0xFF, which never appears in UTF-8.

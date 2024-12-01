@@ -16,9 +16,8 @@ Highlights
 * The data is self-describing and can inflate itself into typed variables.
 * No nested structures, no tuple, no dataset name, always a simple array of uniform data.
 * Generic integer and float types absorb the difference of type sizes.
-* Automatic compression using variable length integer/float and dictionary-coder for string.
-* The data is stored in the minimal data size.
-* Conversions from/into `ndarray` and `nalgebra` are supported.
+* Automatic compression using variable length integer/float and dictionary-coder for string. The data is stored in the minimal data size.
+* Conversions from/into `Vec<_>`, `[T; N]`, `ndarray` and `nalgebra` are supported.
 
 Caution
 -------
@@ -77,7 +76,7 @@ The floating number is shortened to the smallest size. Fach four integers, one b
 Only UTF-8 string is allowed, in particular, the non-UTF value of 0xFF is used internally and should be avoided.
 #### Scalar
 * **Single**<br />
-Just a single Vec[u8] data
+Vec[u8] binary data
 #### Array
 * **Joined**<br />
 The strings are joined with marker 0xFF, which never appears in UTF-8.
@@ -89,6 +88,7 @@ ToDo
 - [ ] Implimentation in different languages: Python, Julia, R, C++, Fortran, ...
 - [ ] Half float and long double float support.
 - [x] Support for `[T; N]`.
+- [x] Support for `usize` and `isize`.
 
 Q&A
 --------------

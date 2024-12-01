@@ -150,3 +150,21 @@ fn array() {
     let restored: [u32; 128] = unpacked.try_into().unwrap();
     assert_eq!(original, restored);
 }
+
+#[test]
+fn isize_usize() {
+    let original: Vec<_> = (-128..128).map(|i| i as isize).collect();
+    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let binary = obj.pack();
+    let unpacked = ArrayObject::unpack(binary).unwrap();
+    let restored: Vec<isize> = unpacked.try_into().unwrap();
+    assert_eq!(original, restored);
+
+    let original: Vec<_> = (0..128).map(|i| i as usize).collect();
+    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let binary = obj.pack();
+    let unpacked = ArrayObject::unpack(binary).unwrap();
+    let restored: Vec<usize> = unpacked.try_into().unwrap();
+    assert_eq!(original, restored);
+}
+

@@ -11,7 +11,7 @@ impl Product for Vec<u64> {
     }
 }
 
-/// Concat ArrayObjects of the same type, size and shape.
+/// Concatenates ArrayObjects.
 ///
 /// ```
 /// use array_object::{ArrayObject, TryConcat};
@@ -23,6 +23,7 @@ impl Product for Vec<u64> {
 /// let obj = objs.try_concat().unwrap();
 /// ```
 pub trait TryConcat {
+    /// Concatenates ArrayObjects of the same type, size and shape, and create an ArrayObject of one higher dimension.
     fn try_concat(self) -> Result<ArrayObject, ArrayObjectError>;
 }
 
@@ -54,7 +55,7 @@ impl TryConcat for Vec<ArrayObject> {
     }
 }
 
-/// A macro to save the data into a file.
+/// A macro to save the data into a file. If the file exists, this will overwrite the existing file.
 ///
 /// ```
 /// use array_object::*;

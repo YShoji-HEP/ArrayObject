@@ -202,4 +202,4 @@ macro_rules! into_integer {
     }
 }
 
-into_integer!(i8, i16, i32, i64, i128, u8, u16, u32, u64, u128);
+into_integer!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize);

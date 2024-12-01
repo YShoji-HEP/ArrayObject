@@ -11,6 +11,8 @@ pub enum DataType {
 }
 
 /// The main array storage with type abstraction.
+/// 
+/// Data is stored uncompressed. Compression is only available in binary form, i.e. when `.pack()` is called.
 #[derive(Debug, Clone, PartialEq)]
 pub struct ArrayObject {
     pub(crate) data: Vec<u8>,
@@ -19,7 +21,7 @@ pub struct ArrayObject {
 }
 
 impl ArrayObject {
-    /// Returens the minimal size, in bits, required to restore the array.
+    /// Returens the minimal size of type, in bits, required to restore the array.
     pub fn bits(&self) -> Option<usize> {
         match self.datatype {
             DataType::UnsignedInteger | DataType::SignedInteger | DataType::Real => {
@@ -37,7 +39,7 @@ impl ArrayObject {
     pub fn shape(&self) -> Vec<usize> {
         self.shape.iter().map(|&x| x as usize).collect()
     }
-    /// Returns the uncompressed datasize.
+    /// Returns the datasize of the array.
     pub fn datasize(&self) -> usize {
         self.data.len()
     }
