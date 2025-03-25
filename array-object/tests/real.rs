@@ -14,7 +14,8 @@ fn single_real() {
     }
     for i in -128..128 {
         let original = i as f64 / 2f64.powi(3);
-        let obj: ArrayObject = original.try_into().unwrap();
+        let reference = &original;
+        let obj: ArrayObject = reference.try_into().unwrap();
         let binary = obj.pack();
         assert_eq!(binary.len(), 5);
         let unpacked = ArrayObject::unpack(binary).unwrap();
@@ -46,7 +47,8 @@ fn array_real() {
 #[test]
 fn array_fixed_real() {
     let original: Vec<_> = (-128..128).map(|i| i as f64 / 2f64.powi(3)).collect();
-    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let reference = &original;
+    let obj: ArrayObject = reference.try_into().unwrap();
     let binary = obj.pack();
     assert_eq!(binary.len(), 256 * 4 + 3);
     let unpacked = ArrayObject::unpack(binary).unwrap();

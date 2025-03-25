@@ -1,7 +1,7 @@
 [package]
 name = "array-object"
-version = "0.2.2"
-edition = "2021"
+version = "0.2.3"
+edition = "2024"
 license = "Apache-2.0"
 description = "Self-describing binary format for arrays of integers, real numbers, complex numbers and strings, designed for object storage, database and single file"
 repository = "https://github.com/YShoji-HEP/ArrayObject"

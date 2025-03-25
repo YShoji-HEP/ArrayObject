@@ -22,6 +22,11 @@ macro_rules! from_complex {
                     Pair(val.re, val.im).into()
                 }
             }
+            impl From<&Complex<$ty>> for ArrayObject {
+                fn from(val: &Complex<$ty>) -> Self {
+                    Pair(val.re, val.im).into()
+                }
+            }
             impl<const N: usize> From<[Complex<$ty>; N]> for ArrayObject {
                 fn from(val: [Complex<$ty>; N]) -> Self {
                     val.to_vec().into()
@@ -50,6 +55,21 @@ macro_rules! from_complex {
             }
             impl From<Vec<Complex<$ty>>> for ArrayObject {
                 fn from(val: Vec<Complex<$ty>>) -> Self {
+                    let shape = vec![val.len() as u64];
+                    let mut data = Vec::<u8>::with_capacity(2 * val.len() * size_of::<$ty>());
+                    for v in val {
+                        data.append(&mut v.re.to_le_bytes().to_vec());
+                        data.append(&mut v.im.to_le_bytes().to_vec());
+                    }
+                    Self {
+                        data,
+                        shape,
+                        datatype: DataType::Complex,
+                    }
+                }
+            }
+            impl From<&Vec<Complex<$ty>>> for ArrayObject {
+                fn from(val: &Vec<Complex<$ty>>) -> Self {
                     let shape = vec![val.len() as u64];
                     let mut data = Vec::<u8>::with_capacity(2 * val.len() * size_of::<$ty>());
                     for v in val {

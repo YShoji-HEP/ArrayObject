@@ -85,10 +85,11 @@ Create a dictionary of maximum 256 variants and the array is converted into an a
 
 ToDo
 -----
-- [ ] Implimentation in different languages: Python, Julia, R, C++, Fortran, ...
-- [ ] Half float and long double float support.
 - [x] Support for `[T; N]`.
 - [x] Support for `usize` and `isize`.
+- [ ] Serde support.
+- [ ] Implimentation in different languages: Python, Julia, R, C++, Fortran, ...
+- [ ] Half float and long double float support.
 
 Q&A
 --------------

@@ -20,6 +20,14 @@ macro_rules! nalgebra_impl {
                     VecShape(v, shape).try_into()
                 }
             }
+            impl<R: Dim, C: Dim, S: RawStorage<$ty, R, C>> TryFrom<&Matrix<$ty, R, C, S>> for ArrayObject where DefaultAllocator: Allocator<C, R> {
+                type Error = ArrayObjectError;
+                fn try_from(val: &Matrix<$ty, R, C, S>) -> Result<Self, Self::Error> {
+                    let shape = vec![val.shape().0 as u64, val.shape().1 as u64];
+                    let v: Vec<_> = val.transpose().iter().copied().collect();
+                    VecShape(v, shape).try_into()
+                }
+            }
             impl TryFrom<ArrayObject> for DMatrix<$ty> {
                 type Error = ArrayObjectError;
                 fn try_from(val: ArrayObject) -> Result<Self, Self::Error> {

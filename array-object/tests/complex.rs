@@ -61,7 +61,8 @@ fn array_fixed_complex() {
     let original: Vec<_> = (-128..128)
         .map(|i| Complex64::new(i as f64 / 2f64.powi(3), i as f64 / 2f64.powi(4)))
         .collect();
-    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let reference = &original;
+    let obj: ArrayObject = reference.try_into().unwrap();
     let binary = obj.pack();
     assert_eq!(binary.len(), 256 * 4 * 2 + 3);
     let unpacked = ArrayObject::unpack(binary).unwrap();

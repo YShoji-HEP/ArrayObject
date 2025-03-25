@@ -4,7 +4,7 @@ pub trait Zigzag {
 }
 
 macro_rules! impl_zigzag {
-    ($ty:tt, $ty2:tt, $n:literal) => {
+    ($ty:tt, $ty2:tt, $n:expr) => {
         impl Zigzag for $ty {
             fn zigzag(mut self) -> Self {
                 self = (self << 1) ^ (self >> $n);
@@ -24,8 +24,4 @@ impl_zigzag!(i32, u32, 31);
 impl_zigzag!(i64, u64, 63);
 impl_zigzag!(i128, u128, 127);
 
-#[cfg(target_pointer_width = "64")]
-impl_zigzag!(isize, usize, 63);
-
-#[cfg(target_pointer_width = "32")]
-impl_zigzag!(isize, usize, 31);
+impl_zigzag!(isize, usize, std::mem::size_of::<usize>() * 8 - 1);

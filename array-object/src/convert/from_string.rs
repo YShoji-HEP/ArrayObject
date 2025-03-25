@@ -16,8 +16,30 @@ macro_rules! from_text {
                     }
                 }
             }
+            impl From<&$ty> for ArrayObject {
+                fn from(val: &$ty) -> Self {
+                    let data: Vec<u8> = val.to_string().into_bytes().to_vec();
+                    Self {
+                        data,
+                        shape: vec![],
+                        datatype: DataType::String,
+                    }
+                }
+            }
             impl From<Vec<$ty>> for ArrayObject {
                 fn from(val: Vec<$ty>) -> Self {
+                    let shape = vec![val.len() as u64];
+                    let val: Vec<_> = val.into_iter().map(|x| x.to_string()).collect();
+                    let data = val.into_iter().map(|x| x.as_bytes().to_vec()).collect::<Vec<_>>().join(&255u8);
+                    Self {
+                        data,
+                        shape,
+                        datatype: DataType::String,
+                    }
+                }
+            }
+            impl From<&Vec<$ty>> for ArrayObject {
+                fn from(val: &Vec<$ty>) -> Self {
                     let shape = vec![val.len() as u64];
                     let val: Vec<_> = val.into_iter().map(|x| x.to_string()).collect();
                     let data = val.into_iter().map(|x| x.as_bytes().to_vec()).collect::<Vec<_>>().join(&255u8);

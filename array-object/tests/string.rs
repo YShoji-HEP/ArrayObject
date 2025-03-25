@@ -14,7 +14,8 @@ fn single_string() {
 #[test]
 fn array_joined_string() {
     let original = vec!["testA".to_string(), "testB".to_string()];
-    let obj: ArrayObject = original.clone().try_into().unwrap();
+    let reference = &original;
+    let obj: ArrayObject = reference.try_into().unwrap();
     let binary = obj.pack();
     assert_eq!(binary.len(), 2 * "testA".to_string().len() + 1 + 2);
     let unpacked = ArrayObject::unpack(binary).unwrap();

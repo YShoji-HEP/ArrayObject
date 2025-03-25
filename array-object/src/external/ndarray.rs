@@ -7,7 +7,7 @@ use crate::adaptor::*;
 use crate::error::ArrayObjectError;
 use crate::misc::TryConcat;
 use crate::ArrayObject;
-use ndarray::{Array, Array0, Array1, Array2, Array3, Array4, Array5, Array6, ArrayD, Dimension};
+use ndarray::{Array, Array0, Array1, Array2, Array3, Array4, Array5, Array6, ArrayD, Dimension, ArrayView};
 use num_complex::Complex;
 
 macro_rules! ndarray_impl {
@@ -18,6 +18,22 @@ macro_rules! ndarray_impl {
                 fn try_from(val: Array<$ty, D>) -> Result<Self, Self::Error> {
                     let shape: Vec<_> = val.shape().iter().map(|x| *x as u64).collect();
                     let v: Vec<_> = val.into_iter().collect();
+                    VecShape(v, shape).try_into()
+                }
+            }
+            impl<D: Dimension> TryFrom<ArrayView<'_,$ty, D>> for ArrayObject {
+                type Error = ArrayObjectError;
+                fn try_from(val: ArrayView<'_,$ty, D>) -> Result<Self, Self::Error> {
+                    let shape: Vec<_> = val.shape().iter().map(|x| *x as u64).collect();
+                    let v: Vec<_> = val.to_owned().into_iter().collect();
+                    VecShape(v, shape).try_into()
+                }
+            }
+            impl<D: Dimension> TryFrom<&Array<$ty, D>> for ArrayObject {
+                type Error = ArrayObjectError;
+                fn try_from(val: &Array<$ty, D>) -> Result<Self, Self::Error> {
+                    let shape: Vec<_> = val.shape().iter().map(|x| *x as u64).collect();
+                    let v: Vec<_> = val.to_owned().into_iter().collect();
                     VecShape(v, shape).try_into()
                 }
             }

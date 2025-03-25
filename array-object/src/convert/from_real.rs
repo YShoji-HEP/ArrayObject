@@ -16,8 +16,32 @@ macro_rules! from_float {
                     }
                 }
             }
+            impl From<&$ty> for ArrayObject {
+                fn from(val: &$ty) -> Self {
+                    let data = val.to_le_bytes().to_vec();
+                    Self {
+                        data,
+                        shape: vec![],
+                        datatype: DataType::Real,
+                    }
+                }
+            }
             impl From<Vec<$ty>> for ArrayObject {
                 fn from(val: Vec<$ty>) -> Self {
+                    let shape = vec![val.len() as u64];
+                    let mut data = Vec::<u8>::with_capacity(size_of::<$ty>() * val.len());
+                    for v in val {
+                        data.append(&mut v.to_le_bytes().to_vec());
+                    }
+                    Self {
+                        data,
+                        shape,
+                        datatype: DataType::Real,
+                    }
+                }
+            }
+            impl From<&Vec<$ty>> for ArrayObject {
+                fn from(val: &Vec<$ty>) -> Self {
                     let shape = vec![val.len() as u64];
                     let mut data = Vec::<u8>::with_capacity(size_of::<$ty>() * val.len());
                     for v in val {
